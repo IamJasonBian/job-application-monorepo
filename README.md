@@ -1,6 +1,6 @@
-# Job Application Monorepo
+# LinkFeed
 
-End-to-end job application management system combining notification tracking, intelligent agents, and application management.
+Tracking, notifications, and application management for chained agentic workflows 
 
 ## Repository Structure
 
