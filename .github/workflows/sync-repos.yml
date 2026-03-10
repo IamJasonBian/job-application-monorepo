@@ -16,7 +16,7 @@ permissions:
   contents: write
 
 jobs:
-  sync-allocation-notification-service:
+  sync-repos:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout monorepo
@@ -24,11 +24,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Sync allocation-notification-service
+      - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Sync allocation-notification-service
+        run: |
           # Remove existing directory if it exists
           rm -rf packages/allocation-notification-service
 
@@ -41,21 +43,9 @@ jobs:
           # Commit changes
           git add packages/allocation-notification-service
           git diff --staged --quiet || git commit -m "chore: sync allocation-notification-service from upstream"
-          git push
-
-  sync-allocation-agent:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout monorepo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Sync allocation-agent
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
           # Remove existing directory if it exists
           rm -rf packages/allocation-agent
 
@@ -68,21 +58,9 @@ jobs:
           # Commit changes
           git add packages/allocation-agent
           git diff --staged --quiet || git commit -m "chore: sync allocation-agent from upstream"
-          git push
-
-  sync-application-manager:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout monorepo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Sync application-manager
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
           # Remove existing directory if it exists
           rm -rf packages/application-manager
 
@@ -95,4 +73,6 @@ jobs:
           # Commit changes
           git add packages/application-manager
           git diff --staged --quiet || git commit -m "chore: sync application-manager from upstream"
-          git push
+
+      - name: Push all changes
+        run: git push
