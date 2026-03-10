@@ -1,0 +1,98 @@
+name: Sync Repositories
+
+on:
+  # Trigger on webhook from source repositories
+  repository_dispatch:
+    types: [sync-request]
+
+  # Manual trigger
+  workflow_dispatch:
+
+  # Scheduled sync as fallback (every 6 hours)
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  sync-allocation-notification-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout monorepo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Sync allocation-notification-service
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Remove existing directory if it exists
+          rm -rf packages/allocation-notification-service
+
+          # Clone the source repository
+          git clone --depth 1 https://github.com/IamJasonBian/allocation-notification-service.git packages/allocation-notification-service
+
+          # Remove .git directory to avoid nested repos
+          rm -rf packages/allocation-notification-service/.git
+
+          # Commit changes
+          git add packages/allocation-notification-service
+          git diff --staged --quiet || git commit -m "chore: sync allocation-notification-service from upstream"
+          git push
+
+  sync-allocation-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout monorepo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Sync allocation-agent
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Remove existing directory if it exists
+          rm -rf packages/allocation-agent
+
+          # Clone the source repository
+          git clone --depth 1 https://github.com/IamJasonBian/allocation-agent.git packages/allocation-agent
+
+          # Remove .git directory to avoid nested repos
+          rm -rf packages/allocation-agent/.git
+
+          # Commit changes
+          git add packages/allocation-agent
+          git diff --staged --quiet || git commit -m "chore: sync allocation-agent from upstream"
+          git push
+
+  sync-application-manager:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout monorepo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Sync application-manager
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Remove existing directory if it exists
+          rm -rf packages/application-manager
+
+          # Clone the source repository
+          git clone --depth 1 https://github.com/IamJasonBian/application-manager.git packages/application-manager
+
+          # Remove .git directory to avoid nested repos
+          rm -rf packages/application-manager/.git
+
+          # Commit changes
+          git add packages/application-manager
+          git diff --staged --quiet || git commit -m "chore: sync application-manager from upstream"
+          git push

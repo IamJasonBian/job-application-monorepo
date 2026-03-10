@@ -1,0 +1,29 @@
+{
+  "name": "job-application-monorepo",
+  "version": "1.0.0",
+  "description": "Monorepo for end-to-end job application management",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "sync": "gh workflow run sync-repos.yml",
+    "install:all": "npm install && npm install --workspaces",
+    "clean": "rm -rf packages/*/node_modules && rm -rf node_modules",
+    "typecheck:all": "npm run typecheck --workspaces --if-present"
+  },
+  "keywords": [
+    "job-application",
+    "monorepo",
+    "automation"
+  ],
+  "author": "Jason Bian",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
