@@ -1,0 +1,24 @@
+{
+  "name": "allocation-agent",
+  "version": "1.0.0",
+  "description": "Auto-apply agent for job applications across Greenhouse, Lever, and Dover platforms using headful Chrome",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "test-apply": "node scripts/test-apply.mjs",
+    "batch-greenhouse": "node scripts/batch-greenhouse.mjs",
+    "batch-dover": "node scripts/batch-dover.mjs",
+    "lever-apply": "node scripts/lever-apply.mjs",
+    "check-status": "node scripts/check-status.mjs"
+  },
+  "dependencies": {
+    "ioredis": "^5.4.0",
+    "puppeteer-core": "^24.37.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0"
+  }
+}
